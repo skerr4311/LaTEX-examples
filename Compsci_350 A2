@@ -1,0 +1,148 @@
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usetikzlibrary{automata, positioning}
+\usepackage{pgf}
+\usepackage{wrapfig,lipsum,booktabs}
+\usetikzlibrary{arrows,automata}
+\usepackage[latin1]{inputenc}
+\usepackage{verbatim}
+
+\title{Computer Science 350 \\
+\large Assignment Two}
+\author{Steven Kerr 6022796}
+\date{11/05/2019}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{1. i} \\
+A decider is a machine that halts on all inputs. For a proof that $M$ is not a decider we must first find a string that, when passed to machine $M$, will not halt. \\
+Let $u=01$ and let us run $u$ on $M$. \\
+\\
+$\vdash_M q_1 0 1 \sqcup \sqcup \sqcup \dots$ \\
+$\vdash_M 0 q_2 1 \sqcup \sqcup \sqcup \dots$ \\
+$\vdash_M 0 1 q_3 \sqcup \sqcup \sqcup \dots$ \\
+$\vdash_M 0 1 \sqcup q_3 \sqcup \sqcup \dots$ \\
+$\vdash_M 0 1 \sqcup \sqcup q_3 \sqcup \dots$ \\
+\\
+as we can see here, when $q_3$ is reached, the input can never reach a final state ie: \\
+$\delta ( q_3 , \sqcup ) = ( q_3 , \sqcup , R )$ \\
+$\delta ( q_3 , 0 ) = ( q_3 , 0 , R )$ \\
+$\delta ( q_3 , 1 ) = ( q_3 , 1 , R )$ \\
+Therefore machine $M$ is not a decider. \\
+\\
+\textbf{1. ii} \\
+The language recognised by a Turing-machine is, by definition, the set of strings that the machine accepts. Let such a set be called $L$ and let \\
+$L=\{1^n 0^k | n \geq 0$ and $k > 0\}$ \\
+\\
+Now we must prove $A=L(M)$ \\
+By definition, if $M$ is a turing machine with input alphabet $\Sigma$, let $L(M)$ be the set of strings over $\Sigma$ accepted by $M$. If $A$ is a language over $\Sigma$, we say that $M$ recognises $L$ if $A=L(M)$. \\
+So, I must prove that $A \subseteq L(M)$ and $L(M) \subseteq A$. \\
+\\
+$i) A \subseteq L(M)$ \\
+Suppose that $w \in A$. So $w$ contains $n\#1^s$ and $k\#0^s$ where $n \geq 0$ and $k > 0$. Let $w = w_1 w_2 \dots w_n$ and let $w_k$ be the first $0$ in $w$ $(1 \leq  k \leq n)$.
+so $w = 1^{k-1}0^{j}$ and $j = n - ( k - 1)$. \\ 
+We need to show that $w \in L(M)$, ie that $M$ accepts $w$. So we need to show that there is a sequence of configurations $C_1 \dots, C_|$ such that $C_1$ is the starting configuration of $M$ on $w$, each $C_i$ yields $_M C_{i+1}$ (where $1 \leq i < n $), and $C_|$ is an accepting configuration. \\
+We construct the following sequence of cfs on $M$: \\
+$C_1 = q_1 1^{k-1} 0^j \sqcup \sqcup \dots$, \\
+$C_2 = 1^1 q_1 1^{k-2} 0^j \sqcup \sqcup \dots$, \\
+$C_k = 1^{k-1} q_1 0^j \sqcup \sqcup \dots$ , \\
+$C_{k+1} = 1^{k-1} 0 q_2 0^{j-1} \sqcup \sqcup \dots$, \\
+$C_{k+2} = 1^{k-1} 0 0 q_2 0^{j-2} \sqcup \sqcup \dots$, \\
+$C_{n-1} = 1^{k-1} 0^{j-1} q_2 0 \sqcup \sqcup \dots$, \\
+$C_n = 1^{k-1} 0^j q_2 \sqcup \sqcup \dots$, \\
+$C_{n+1} = 1^{k-1} 0^j \sqcup q_{accept} \sqcup \dots$ \\
+\\
+It is obvious that $C_i \vdash_M C_{i+1}$ for $1 \leq i < k$, since 
+$\delta ( q_1 , 1 ) = ( q_1 , 1 , R )$ and so until the machine encounters the first $0$, ie $w_k$, it simply stays in $q_1$ and moves right. In  addition, $C_k \vdash_M C_{k+1}$, since 
+$\delta ( q_2 , 0 ) = ( q_2 , 0 , R )$ and so until the machine encounters the first $\sqcup$, ie $w_{n+1}$, it simply stays in $q_2$ and moves to the right. Finally, $C_n \vdash_M C_{n+1}$ [Reason: $C_n = 1^{k-1} 0^j q_2 \sqcup \sqcup \dots$, and this yields $_M$ $C_{n+1} = 1^{k-1} 0^j \sqcup q_{accept} \sqcup \dots$ since $\delta ( q_2 , \sqcup ) = ( q_{accept} , \sqcup , R )$]  \\
+\\
+Note also that $C_1$ is the start configuration of $M$ on $w$, and $C_{n+1}$ is an accepting configuration. It follows from definitions 3 $M$ accepts $w$. Hence since $w$ was an arbitrary member of $A$, it follows that for all $w \in {0,1}^*$, if $w \in A$ then $w \in L(M)$. Hence $(^*) A \subseteq L(M)$. \\
+
+\newpage
+$ii) L(M) \subseteq A$ \\
+Consider $w \in L(M)$. Since $w \in L(M)$, $M$ accepts $w$. So there is a sequence of cfs $C_1, C_2, \dots, C_{n+1}$ such that $C_1$ is the start cf of $M$ on $w$, each $C_i \vdash_M C_{i+1} (for 0 \leq i \leq k)$, also $C_k \vdash_M C_{k+1} (for 0 \leq k < n)$, and $C_{n+1}$ is an accepting cf. \\
+\\
+Suppose that $C_{n+1} = 1^k 0^j q_{accept}$. Clearly $w = 1^k 0^j$ where $k \geq 0$ and $j > 0$ (since $M$ doesn't change any of the input symbols). Now note that the application of $\delta$ that yields $C_{n+1}$ from the preceding cf $C_n$ is $\delta(q_2, \sqcup) = (q_{accept}, \sqcup, R)$ and to get to $q_2$ there must be atleast one $0$ in $w$ as from $C_k$ to $C_{k+1}$ is $\delta(q_1, 0) = (q_2, 0, R)$. It follows that $w$ contains one or more $0^s$ and zero or more $1^s$, and so $w \in A$. \\
+\\
+Since $w$ was an arbitrart member of $L(M)$, it follows that for all $w \in \{0, 1\}^*$, if $w \in L(M)$ then $w \in A$. Hence $L(M) \subseteq A$. \\
+\\
+\textbf{1. iii} \\
+The language $A$ is turing-decidable. This is because there exists a turing-machine that decides $A$. As a simple example, if we took the turing-machine $Q$, removed $q_3$ and redirected anything going to $q_3$ to $q_{reject}$ and called it $Q_2$ we would have: \\
+$\delta ( q_1 , \sqcup ) = ( q_{reject} , \sqcup , R )$ \\
+$\delta ( q_1 , 0 ) = ( q_2 , 0 , R )$ \\
+$\delta ( q_1 , 1 ) = ( q_1 , 1 , R )$ \\
+$\delta ( q_2 , \sqcup ) = ( q_{accept} , \sqcup , R )$ \\
+$\delta ( q_2 , 0 ) = ( q_2 , 0 , R )$ \\
+$\delta ( q_2 , 1 ) = ( q_{reject} , 1 , R )$ \\
+As you can see here, $Q_2$ decides language $A$. In $q_1$ the input can be rejected, looped on $1^s$ or sent to $q_2$. $q_2$ can be accepted, loop on $0^s$ or rejected. Therefore , $Q_2$ decides $A$ and the language $A$ is decidable.\\
+\newpage
+
+
+
+\noindent \textbf{2. i \\}
+\textbf{Turing-Machine M \\}
+\begin{tikzpicture}[shorten >=1pt, node distance=5cm, on grid, auto]
+	\node[state, initial] (q_0) {$q_0$};
+	\node[state, right=of q_0] (q_2){$q_2$};
+	\node[state, above=of q_2] (q_1) {$q_1$};
+	\node[state, below=of q_2] (q_3) {$q_3$};
+	\node[state, right=of q_1] (q_{accept}) {$q_{accept}$};
+	\node[state, left=of q_3] (q_{reject}) {$q_{reject}$};
+	
+	\path[->]	
+	(q_0) edge[loop above] node{X $\rightarrow$ R} (q_0)
+	(q_0) edge node{0/$\sqcup \rightarrow$ R } (q_1)
+	(q_0) edge[right] node{1/$\sqcup \rightarrow$ R } (q_3)
+	(q_0) edge[bend right] node{$\sqcup \rightarrow$ R } (q_{reject})
+	(q_1) edge node{$\sqcup \rightarrow$ R} (q_{accept})
+	(q_1) edge[loop above] node{X,0 $\rightarrow$ R} (q_1)
+	(q_1) edge[bend left] node{1/X $\rightarrow$ L} (q_2)
+	(q_2) edge[loop right] node{1,X,0 $\rightarrow$ L} (q_3)
+	(q_2) edge node{$\sqcup \rightarrow$ R} (q_0)
+	(q_3) edge[loop below] node{X,1 $\rightarrow$ R} (q_3)
+	(q_3) edge[right] node{0/X $\rightarrow$ L} (q_2)
+	(q_3) edge node{$\sqcup \rightarrow$ R} (q_{reject});
+\end{tikzpicture}
+\\
+\newpage
+A formal definition of the above Turing machine
+\begin{wraptable}{r}{5.5cm}
+	\centering
+	\begin{tabular}{||c | c c c c||} 
+ 		\hline
+ 		$\delta$ & 0 & 1 & $\sqcup$ & X \\ [0.5ex] 
+ 		\hline\hline
+ 		$q_0$ & $q_1$ & $q_3$ & $q_{reject}$ & $q_0$\\ 
+ 		$q_1$ & $q_1$ & $q_2$ & $q_{accept}$ & $q_1$ \\
+		$q_2$ & $q_2$ & $q_2$ & $q_0$ & $q_2$\\
+ 		$q_3$ & $q_2$ & $q_3$ & $q_{reject}$ & $q_3$\\[1ex] 
+ 		\hline
+	\end{tabular}
+\end{wraptable}
+
+\begin{itemize}
+	\item $M \: = \: ( Q, \: \Sigma , \Gamma , \delta, q_0, q_{accept}, q_{reject} )$ 
+	\item $Q \: = \: (q_0, q_1, q_2, q_3, q_{accept}, q_{reject} )$ 
+	\item $\Sigma \: = \: \{0,\: 1 \}^*$ 
+	\item $\Gamma \: = \: \{0,\: 1,\: \sqcup, \: X \}$ 
+\end{itemize}
+description: \\
+This machine matches $1^s$ and $0^s$ together. If there is no match for a $0$, then there are more $0^s$ than $1^s$. \\ 
+When the machine is started $q_0$ checks the input. If the input is $0$ then the machine replaces $0$ with $\sqcup$ and moves right to $q_1$. $q_1$ then moves right through all the $X^s$ and $0^s$ looking for a $1$. Once a $1$ has been located (this means that a $0$ has been matched with a $1$), the machine replaces $1$ with an $X$ and then moves left into $q_2$.  \\ 
+In $q_2$ the machine moves left through all the $1^s$, $X^s$ and $0^s$ looking for $\sqcup$ (the initial matched item). Once $\sqcup$ has been found the machine returns to $q_0$ to start again. Note that $q_0$ moves right over all the $X^s$ looking for the first instance of $1$ or $0$. \\
+If the input is $1$ then the machine replaces $1$ with $\sqcup$ moves to $q_3$. $q_3$ then moves right through all the $X^s$ and $1^s$ looking for a $0$. Once a $0$ has been located (this means that a $1$ has been matched with a $0$), the machine replaces $0$ with an $X$ and then moves left into $q_2$ ($q_2$ has already been explained). \\ 
+\\
+The machine moves right into $q_{accept}$ if a $\sqcup$ is found in $q_1$. This means that no matching $1$ was found for a $0$ which then means that there are more $0^s$ than $1^s$. \\
+\\
+The machine moves right into $q_{reject}$ in two cases: \\
+1. If the string is the empty string. This means that there are not more $0^s$ than $1^s$ and is therefore rejected. \\
+2. If the machine is in $q_3$ and a $\sqcup$ is found. This means that no matching $0$ was found for a $1$ which then means that there are more $1^s$ than $0^s$. \\
+\newpage
+
+\textbf{2. ii}
+
+\end{document}
