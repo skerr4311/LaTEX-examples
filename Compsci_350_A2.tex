@@ -108,7 +108,7 @@ As you can see here, $Q_2$ decides language $A$. In $q_1$ the input can be rejec
 	(q_3) edge node{$\sqcup \rightarrow$ R} (q_{reject});
 \end{tikzpicture}
 \\
-\newpage
+
 A formal definition of the above Turing machine
 \begin{wraptable}{r}{5.5cm}
 	\centering
@@ -141,7 +141,6 @@ The machine moves right into $q_{accept}$ if a $\sqcup$ is found in $q_1$. This 
 The machine moves right into $q_{reject}$ in two cases: \\
 1. If the string is the empty string. This means that there are not more $0^s$ than $1^s$ and is therefore rejected. \\
 2. If the machine is in $q_3$ and a $\sqcup$ is found. This means that no matching $0$ was found for a $1$ which then means that there are more $1^s$ than $0^s$. \\
-\newpage
 
 \textbf{2. ii} \\
 Computation for machine $M$ on string $01$: \\
@@ -151,7 +150,6 @@ $\vdash_M q_2 \sqcup X \sqcup \sqcup \dots$ \\
 $\vdash_M \sqcup q_0 X \sqcup \sqcup \dots$ \\
 $\vdash_M \sqcup X q_0 \sqcup \sqcup \dots$ \\
 $\vdash_M \sqcup X \sqcup q_{reject} \sqcup \dots$ \\
-\\
 Computation for machine $M$ on string $100$: \\ 
 $\vdash_M q_0 1 0 0 \sqcup \sqcup \dots$ \\
 $\vdash_M \sqcup q_3 0 0 \sqcup \sqcup \dots$ \\
@@ -180,7 +178,7 @@ $M^{'}$ = "On input $w$":
 \end{enumerate}
 $M^{'}$ always halts because $N^{'}$ and $M$ always halts. $M^{'}$ gives the correct result, because if $w \notin \overline{L_1}$ $N^{'}$ will reject and so if $w \in \overline{L_1}$, then $w$ will be sent to $M$. In $M$ if $w \notin L$, $M$ will accept $w$, else $M$ will reject. \\
 This means that $M^{'}$ decides $L_2$ and the language is decidable. \\
-\\
+\newpage
 \textbf{3.} \\
 $Q = \{ <A, B> |$ A and B are NFAs over some alphabet $\Sigma$ and $\emptyset \sqsubseteq L(A)$ and $L(A) \sqsubseteq L(B)$ is Turing-decidable. \\
 Note $\sqsubseteq$ = 'Is a proper set of' \\
