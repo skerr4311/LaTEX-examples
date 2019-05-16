@@ -197,12 +197,15 @@ This construction can be carried out by a TM. Once we have such a C, we can test
 $C^*$ = 'On input $<A$,$B>$, where A and B are NFAs:',
 \begin{enumerate}
 \item Convert $A,B$ to DFAs $A^{'},B^{'}$.
-\item Use $T$ on $<A^{'}>$ from 'Theorem 10' to show that $L(A)$ is not empty. If $T$ rejects then $reject$, else got to 3. 
+\item Use $T$ on $<A^{'}>$ from 'Theorem 10' to show that $L(A)$ is not empty. If $T$ rejects then got to 3, else $reject$. 
 \item let $B^{''}$ be the DFA that recognises $\overline{L(B)}$ let $D$ be a DFA that recognises $L(A) \cap \overline{L(B)}$. Use $T$ on  $<D>$, If $T$ rejects then $reject$, else got to 4.  
 \item let $A^{''}$ be the DFA that recognises $\overline{L(A)}$ let $E$ be the DFA that 
 recognises $L(B) \cap \overline{L(A)}$. Use $T$ on $<E>$, If $T$ accepts then $reject$, if $T$ rejects then $accept$.
 \end{enumerate}
-Clearly $C^{*}$ accepts $<A,B>$ iff $L(A) \sqsubseteq L(B)$.  
+Clearly $C^{*}$ accepts $<A,B>$ iff $L(A) \sqsubseteq L(B)$. $C^{*}$ will always end in a $reject$ or $accept$ state because we make use of the theorem 10 $E_{DFA}$ is decidable. In step 1 we convert the NFAs to DFAs. Then in step 2 we check to see if $L(A)$ is empty. If $L(A) \neq \emptyset$ then we move to step 3 and check to see if $L(A) \cap \overline{L(B)} = \emptyset$ if accepted then we move to step 4 and check $L(B) \cap \overline{L(A)} \neq \emptyset$. As we can see, $C^{*}$ will always halt on input $<A,B>$ because of theorem 10 where a $E_{DFA}$ is decidable.
+\newpage
+\textbf{4.} \\
+ 
 
 
 
