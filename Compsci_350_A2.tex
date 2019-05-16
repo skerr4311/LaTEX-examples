@@ -203,6 +203,9 @@ recognises $L(B) \cap \overline{L(A)}$. Use $T$ on $<E>$, If $T$ accepts then $r
 Clearly $C^{*}$ accepts $<A,B>$ iff $L(A) \sqsubseteq L(B)$. $C^{*}$ will always end in a $reject$ or $accept$ state because we make use of the theorem 10 $E_{DFA}$ is decidable. In step 1 we convert the NFAs to DFAs. Then in step 2 we check to see if $L(A)$ is empty. If $L(A) \neq \emptyset$ then we move to step 3 and check to see if $L(A) \cap \overline{L(B)} = \emptyset$ if accepted then we move to step 4 and check $L(B) \cap \overline{L(A)} \neq \emptyset$. As we can see, $C^{*}$ will always halt on input $<A,B>$ because of theorem 10 where a $E_{DFA}$ is decidable.
 \newpage
 \textbf{4.} \\
+$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$ \\
+$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$\\
+Note, the symbols $\bigodot$ and $\bigotimes$ will represent given language.\\
  
 
 
