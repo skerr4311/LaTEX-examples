@@ -205,16 +205,32 @@ Clearly $C^{*}$ accepts $<A,B>$ iff $L(A) \sqsubseteq L(B)$. $C^{*}$ will always
 \textbf{4.} \\
 $\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$ \\
 $\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$\\
-Note, the symbols $\bigodot$ and $\bigotimes$ will represent given language.\\
- 
+Note, the symbols $\bigodot$ and $\bigotimes$ will represent given language. We can also assume that languages $A$ and $B$ are decidable.\\
+Proof: I will start with deciding $A  \circ B$. (Theorem 3. iv).\\
+Suppose $A$ and $B$ are Turing-decidable. Let $M_1$ decide $A$ and $M_2$ decide $B$. Then $N$, a $NTM$, decides $A  \circ B$. $N$ is as follows:\\
+\\
+$N$ = 'On input $w$',
+\begin{enumerate}
+\item Non-deterministically split $w$ into two parts, $x$ and $y$. Go to 2.
+\item Run $M_1$ on the left part, $x$. If $M_1$ accepts, go to 3. if $M_1$ rejects, go to $q_{reject}$.
+\item Run $M_2$ on the right part $y$. If $M_2$ accepts, $accept$. If $M_2$ rejects,  go to $q_{reject}$.
+\end{enumerate}
+Clearly $N$ accepts $w$ iff $w$ is the concatenation of two strings $x$ and $y$, the first of which is in $A$ and the second in $B$, and $N$ rejects otherwise. Hence $N$ decides $A  \circ B$. \\
+\\
+Now we will look at $(w \in A \; \& \; w \notin B)$. This means that $A \cap B = \emptyset$. Also, $(w \in A \; \& \; w \in B)$ would then mean that $A \cap \overline{B} = \emptyset$ and we can use this to say that: $$\bigodot = A \cap \overline{B} = \emptyset$$
+$$\bigotimes = A \cap B = \emptyset$$
+We can then close the two under union:
+ $$(A \cap B) \cup (A \cap \overline{B}) = \emptyset$$
+and use the following Turing machine $M^{*}$ to show that the set of Turing decidable languages are closed under both $\bigodot$ and $\bigotimes$:
+\newpage
+Let $A^{'}$ be the DFA that accepts the language $A$. Let $B^{'}$ be the DFA that accepts the language $B$. 
 
-
-
-
-
-
-
-
+$M^{*}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
+\begin{enumerate}
+\item Let $B^{''}$ be the DFA that decides $\overline{B}$ and let $D$ be the DFA that recognises $(A \cap \overline{B})$. Use $T$ (from theorem 10) on $<D>$, if $T$ accepts, $accept$. If $T$ rejects got to 2.
+\item Let $D^{*}$ be the DFA that recognises $(A \cap B)$. Use $T$ on $<D^{*}>$. If $T$ accepts $accept$. If $T$ rejects, go to 3. 
+\item 3..
+\end{enumerate}
 
 
 
