@@ -229,9 +229,11 @@ $M^{*}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
 \begin{enumerate}
 \item Let $B^{''}$ be the DFA that decides $\overline{B}$ and let $D$ be the DFA that recognises $(A \cap \overline{B})$. Use $T$ (from theorem 10) on $<D>$, if $T$ accepts, $accept$. If $T$ rejects got to 2.
 \item Let $D^{*}$ be the DFA that recognises $(A \cap B)$. Use $T$ on $<D^{*}>$. If $T$ accepts $accept$. If $T$ rejects, go to 3. 
-\item 3..
+\item Take a string $w$ such that $w \in \{0,1\}^{*}$ and use Turing machine $N$ on $w$. If $N$ accepts, $accept$. If $N$ rejects, $reject$.
 \end{enumerate}
-
+As we can see, machine $M^{*}$ can only $accept$ or $reject$ the two languages. This is because we use $T$ from theorem 10 which decides a DFA input. So $T$ will always halt in an accept or reject state. We also make use of Theorem 3. iv where Turing machine $N$ decides concatenation of two decidable languages. $N$ is also decidable because $N$ will always halt in an accept or reject state. We already know the languages $A$ and $B$ are Turing-decidable and we can see that $M^{*}$ is also decidable. Therefore, $M^{*}$ decides: $$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$$
+$$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$$
+closed under union.
 
 
 
