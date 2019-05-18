@@ -219,21 +219,27 @@ Clearly $N$ accepts $w$ iff $w$ is the concatenation of two strings $x$ and $y$,
 \\
 Now we will look at $(w \in A \; \& \; w \notin B)$. This means that $A \cap B = \emptyset$. Also, $(w \in A \; \& \; w \in B)$ would then mean that $A \cap \overline{B} = \emptyset$ and we can use this to say that: $$\bigodot = A \cap \overline{B} = \emptyset$$
 $$\bigotimes = A \cap B = \emptyset$$
-We can then close the two under union:
- $$(A \cap B) \cup (A \cap \overline{B}) = \emptyset$$
-and use the following Turing machine $M^{*}$ to show that the set of Turing decidable languages are closed under both $\bigodot$ and $\bigotimes$:
+We can use the following two Turing machine's $M^{*}$ to show that the set of Turing decidable languages are closed under $\bigodot$ and $M^{**}$ to show that the set of Turing decidable languages are closed under $\bigotimes$:
 \newpage
-Let $A^{'}$ be the DFA that accepts the language $A$. Let $B^{'}$ be the DFA that accepts the language $B$. 
-
+Let $A^{'}$ be the DFA that accepts the language $A$. Let $B^{'}$ be the DFA that accepts the language $B$ and run both $M^{*}$ and $M^{**}$ in the following way:\\
+\\
 $M^{*}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
 \begin{enumerate}
 \item Let $B^{''}$ be the DFA that decides $\overline{B}$ and let $D$ be the DFA that recognises $(A \cap \overline{B})$. Use $T$ (from theorem 10) on $<D>$, if $T$ accepts, $accept$. If $T$ rejects got to 2.
-\item Let $D^{*}$ be the DFA that recognises $(A \cap B)$. Use $T$ on $<D^{*}>$. If $T$ accepts $accept$. If $T$ rejects, go to 3. 
+\item Take a string $w$ such that $w \in \{0,1\}^{*}$ and use Turing machine $N$ on $w$. If $N$ accepts, $accept$. If $N$ rejects, $reject$.
+\end{enumerate} 
+$M^{**}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
+\begin{enumerate}
+\item Let $D^{*}$ be the DFA that recognises $(A \cap B)$. Use $T$ on $<D^{*}>$. If $T$ accepts $accept$. If $T$ rejects, go to 2. 
 \item Take a string $w$ such that $w \in \{0,1\}^{*}$ and use Turing machine $N$ on $w$. If $N$ accepts, $accept$. If $N$ rejects, $reject$.
 \end{enumerate}
-As we can see, machine $M^{*}$ can only $accept$ or $reject$ the two languages. This is because we use $T$ from theorem 10 which decides a DFA input. So $T$ will always halt in an accept or reject state. We also make use of Theorem 3. iv where Turing machine $N$ decides concatenation of two decidable languages. $N$ is also decidable because $N$ will always halt in an accept or reject state. We already know the languages $A$ and $B$ are Turing-decidable and we can see that $M^{*}$ is also decidable. Therefore, $M^{*}$ decides: $$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$$
+As we can see, machine $M^{*}$ and $M^{**}$ can only $accept$ or $reject$ the two languages $A$ and $B$. This is because we use $T$ from theorem 10 which decides a DFA input. So $T$ will always halt in an accept or reject state. We also make use of Theorem 3. iv where Turing machine $N$ decides concatenation of two decidable languages. $N$ is also decidable because $N$ will always halt in an accept or reject state. We already know the languages $A$ and $B$ are Turing-decidable and we can see that $M^{*}$ and $M^{**}$ are also decidable. Therefore, $M^{*}$ decides: $$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$$
+and $M^{**}$ decides :
 $$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$$
-closed under union.
+The set of Turing-decidable languages is also closed under both $\bigotimes$ and $\bigodot$. We know this because we have proven above that both languages are decidable using Turing machines $M^{*}$ and $M^{**}$. This means, by definition of closure The class of Turing-decidable languages over a fixed alphabet is closed under the operations of i) union, ii) intersection, iii) complement, iv) concatenation, and v) star. Therefore, we can perform all operations on $\bigotimes$ and $\bigodot$. 
+\newpage
+\textbf{5. [bonus question]} \\
+Consider $L = \{ 1^{n} |$there is a consecutive run of atleast n 7's in the decimal expansion of $\pi\}$. Prove that $L$ is Turing-decidable.
 
 
 
