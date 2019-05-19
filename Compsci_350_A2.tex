@@ -240,7 +240,11 @@ The set of Turing-decidable languages is also closed under both $\bigotimes$ and
 \newpage
 \textbf{5. [bonus question]} \\
 Consider $L = \{ 1^{n} |$there is a consecutive run of atleast n 7's in the decimal expansion of $\pi\}$. Prove that $L$ is Turing-decidable. \\
-To prove this, we will instead try and prove that $L$ is not Turing-decidable.
+We know that the decimal expansion of $\pi$ is countably infinite. We can easily map the natural numbers $N$ to $decimal^{\pi}$. This means that the decimal expansion of $\pi$ is regular which means there is a DFA that accepts it. \\
+It seems like this is possible but i am not sure about putting a limit on $n$. For instance,\\ Case 1: there is a consecutive run of atleast n 7's \\Case 2: the machine never halts because $n$ is too high. \\
+If I put a limit on $n$ then i know it will always halt. The question does state that 'atleast n 7's' which makes me think that we can put a bound on $n$.
+
+
 
 
 
