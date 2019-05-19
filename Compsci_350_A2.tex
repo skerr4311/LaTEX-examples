@@ -239,13 +239,25 @@ $$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \
 The set of Turing-decidable languages is also closed under both $\bigotimes$ and $\bigodot$. We know this because we have proven above that both languages are decidable using Turing machines $M^{*}$ and $M^{**}$. This means, by definition of closure The class of Turing-decidable languages over a fixed alphabet is closed under the operations of i) union, ii) intersection, iii) complement, iv) concatenation, and v) star. Therefore, we can perform all operations on $\bigotimes$ and $\bigodot$. 
 \newpage
 \textbf{5. [bonus question]} \\
-Consider $L = \{ 1^{n} |$there is a consecutive run of atleast n 7's in the decimal expansion of $\pi\}$. Prove that $L$ is Turing-decidable. \\
+Consider $L = \{ 1^{n} |$there is a consecutive run of at least n 7's in the decimal expansion of $\pi\}$. Prove that $L$ is Turing-decidable. \\
 We know that the decimal expansion of $\pi$ is countably infinite. We can easily map the natural numbers $N$ to $decimal^{\pi}$. This means that the decimal expansion of $\pi$ is regular which means there is a DFA that accepts it. \\
 It seems like this is possible but i am not sure about putting a limit on $n$. For instance,\\ Case 1: there is a consecutive run of atleast n 7's \\Case 2: the machine never halts because $n$ is too high. \\
-If I put a limit on $n$ then i know it will always halt. The question does state that 'atleast n 7's' which makes me think that we can put a bound on $n$.
+If I put a limit on $n$ then i know it will always halt. The question does state that 'atleast n 7's' which makes me think that we can put a bound on $n$. \\
+Another thing i know about the first million digits of $\pi$:
+\begin{enumerate}
+\item '7' appears 10,287 times
+\item '77' appears 943 times
+\item '777' appears 93 times
+\item '7777' appears 16 times
+\item '77777' appears 0 times
+\end{enumerate}
+Because we know that the the decimal expansion of $\pi$ is countably infinite there is a possibility off the string $7^{k}$ where $k \geq 5$ in the next million digits of $\pi$ so i propose two algorithms we can consider: \\
+\begin{enumerate}
+\item For every integer $n \geq 0$, the string $7^{n}$ appears in the decimal representation of $\pi$. In this case, the algorithim always returns $accept$.
+\item There is a largest integer $N$ such that $7^{N}$ appears in the decimal representation of $\pi$. In this case the following algorithm (with the value $N$ hard-coded) is always correct:
+\end{enumerate}
 
-
-
+We have no idea which of these algorithms is correct, or what value of $N$ is the right one in algorithm 2. We do know that one of these algorithms is guaranteed to be correct. Therefore, there is an algorithm to decide whether a string of $n \; 7^{s}$ appears in $\pi$. This makes $L$ Turing-decidable.  
 
 
 
