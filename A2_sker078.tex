@@ -1,0 +1,37 @@
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usetikzlibrary{automata, positioning}
+\usepackage{pgf}
+\usepackage{wrapfig,lipsum,booktabs}
+\usetikzlibrary{arrows,automata}
+\usepackage[latin1]{inputenc}
+\usepackage{verbatim}
+
+\title{Computer Science 301 \\
+\large Assignment Two}
+\author{Steven Kerr 6022796}
+\date{20/05/2019}
+
+\begin{document}
+\maketitle
+
+\noindent \textbf{Q1.} \\
+I would be sceptical until the proof is fully understood. Firstly, i would look at the definitions i knew. For instance, The Euclidean Algorithm is know to be ' a technique for quickly finding the GCD of two numbers'. The correctness proof of the Euclidean algorithm  can be found on the internet. It involves proof by induction and there by proving for all integers. \\ 
+In this sense, i know that the algorithm is correct. The 'Program correctness' proof would need more defining and investigation. \\
+To start, I would define the meaning of 'Program correctness' in the following way:
+\begin{enumerate}
+\item there must be a formal specification for the program
+\item there must be some formal definition of the semantics of the programming language
+\end{enumerate}
+Such a definition may take the form of a set of axioms to cover the semantics of any simple statement in the language, and a set of inference rules that show how the semantics of any compound statement, including a complete program, can be inferred from the semantics of its individual component statements. \\
+I also know from lectures that 'It makes sense to prove the correctness of an algorithm, but not, the correctness of a program.' This is, as i understand it, because programs are parallel to mathematical models. Even so, if the program is proven to be 'correct' there are still other variables that play a part in the program. As quoted from Donald Knuth: "Beware of bugs in the above code: I have only proved it correct, not tried it.". \\
+In short, Proving program correctness is hard. The proofs often end up being long and tedious proof-by-cases. You need a formal semantics for whatever language your program is specified in. For real world programming languages, developing such a semantics is often difficult, since there are possible corner cases or odd compiler behaviours that are difficult to model. Proving a program correct only proves that it matches a given specification. It also assumes that it's being compiled by a correct compiler, or run by a correct interpreter, which, in itself is another proof entirely. \\
+If my class mate had gone to such efforts to satisfy each and every one of these requirements for 'Program Correctness' I would congratulate them on the amount of effort it would have taken and definitely consider trying to understand their proof.\\
+\\
+\noindent \textbf{Q2.} \\
+ 
+
+\end{document}
