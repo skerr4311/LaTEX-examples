@@ -21,14 +21,21 @@
 \noindent \textbf{1} \\
 Consider the language: $L=\{(M,w) : M$ is a $TM$ and $M$ accepts $w$ or $M$ is undefined on $w\}$.
 \noindent \begin{enumerate}[label=\alph*)]
-\item Show that for every $TM$ $M$ and input $x$, $M$ rejects $x$ iff $M$ stops on $x$ and rejects $x$.
+\item For every Turing machine there are 3 possibilities:
+\begin{enumerate}
+\item The turing machine accepts the language and halts.
+\item The turing machine rejects the language and halts.
+\item The turing machine is undefined on the language and loops forever.
+\end{enumerate}
+As we can see, The language $L$ consists of Turing machines that accept $w$ and turing machines that are undefined on $w$. This means that for all $M \in L$ $M$ rejects $x$ iff $M$ stops on $x$ and rejects $x$.
 \item $\overline{L}=\{ <M, w> |$ $M$ is a TM and $M$ rejects $w$ $\}$ 
 \item Let us create a TM $M_R$ that recognises the language $\overline{L}$ and construct it in the following way: \\
 on input $<M, w>$
 \begin{enumerate}
 \item Let $M_D$ decide $M$ and run $w$ on $M_D$
-\item if $M_D$ rejects then $reject$.
+\item if $M_D$ rejects then $accept$.
 \end{enumerate}
+As we can see above, $M_R$ recognises the language 
 \end{enumerate}
 A decider is a machine that halts on all inputs. For a proof that $M$ is not a decider we must first find a string that, when passed to machine $M$, will not halt. \\
 Let $u=01$ and let us run $u$ on $M$. \\
