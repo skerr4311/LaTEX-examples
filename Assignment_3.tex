@@ -46,8 +46,25 @@ Let $L=\{<M> : M$ is a $TM$ that accepts atleast two binary strings$\}$.
 \item A language is recognisable if there exists a turing machine such that, on a given language, will halt and accept only the strings in the language. For any strings not in the language will either reject or not halt at all. \\
 For an undecidable language, there is no Turing Machine which accepts the language and makes a decision for every input string $w$. The halting problem is an example of undecidability.
 \item Informally speaking, I think $L$ is turing-recognisable because is could design a machine $M^{b}$ the checks to see if there exists two or more paths from the starting state to an accept state of given $<M>$.
-\item c
+\item Let $P$ be a language consisting of TM descriptions where $P$ fulfils two conditions. \begin{enumerate}[label=\arabic*)]
+\item $P$ is nontrivial, it contains some, but not all, TM descriptions.
+\item Whenever $L(M_1) = L(M_2)$ we have $<M_1> \in P$ iff $<M_2> \in P$. Here $M_1$ and $M_2$ are any TMs.
 \end{enumerate}
+Then, $P$ is undecidable. \\
+Assume for the sake of contradiction that $P$ is decidable and let $R_p$ be a TM that decides $P$. So, let $T_{\emptyset}$ be a turing machine such that $L(T_{\emptyset})= \emptyset$ and assume $<T_{\emptyset}> \notin P$. Because $P$ is not trivial, there exists a TM $T$ with $<T> \in P$.\\
+The following TM $S$ decides $HALT_{TM}$. \\
+$S$ = 'On input $<M>$':
+\begin{enumerate}[label=\arabic*)]
+\item Use $M$ to construct the following TM $M^{'}$. \\ 
+$M^{'}$ = 'On input $x$:
+\begin{enumerate}[label=\arabic*)]
+\item Simulate $M$ on input $x$. If it halts and rejects, $reject$. If it accepts, proceed to stage 2.
+\item Simulate $T$ on $x$. If it accepts, $accept$
+\end{enumerate}
+\item Use TM $R_p$ to determine whether $<M^{'}> \in P$. If YES, $accept$. If NO, $reject$.
+\end{enumerate}
+\end{enumerate}
+\newpage
 $\vdash_M q_1 0 1 \sqcup \sqcup \sqcup \dots$ \\
 $\vdash_M 0 q_2 1 \sqcup \sqcup \sqcup \dots$ \\
 $\vdash_M 0 1 q_3 \sqcup \sqcup \sqcup \dots$ \\
