@@ -56,15 +56,37 @@ The following TM $S$ decides $HALT_{TM}$. \\
 $S$ = 'On input $<M>$':
 \begin{enumerate}[label=\arabic*)]
 \item Use $M$ to construct the following TM $M^{'}$. \\ 
-$M^{'}$ = 'On input $x$:
+$M^{'}$ = 'On input $x$ and $y$ where $x$ and $y$ are binary strings with length $\geq$ 2 and $x \neq y$:
 \begin{enumerate}[label=\arabic*)]
 \item Simulate $M$ on input $x$. If it halts and rejects, $reject$. If it accepts, proceed to stage 2.
-\item Simulate $T$ on $x$. If it accepts, $accept$
+\item Simulate $M$ on input $y$. If it halts and rejects, $reject$. If it accepts, proceed to stage 3.
+\item Simulate $T$ on $x$. If it accepts go to 4.
+\item Simulate $T$ on $y$. If it accepts, $accept$
 \end{enumerate}
 \item Use TM $R_p$ to determine whether $<M^{'}> \in P$. If YES, $accept$. If NO, $reject$.
 \end{enumerate}
-\end{enumerate}
+As we can see above $M^{'}$ simulates $T$ if $M$ accepts $x$ and $y$, hence $L(M^{'}) = L(T)$. Therefore $<M> \in P$ iff $M$ accepts $x$ and $y$.
 \newpage
+Now, let The following TM $S^{'}$ decide $\overline{HALT_{TM}}$. \\
+$S^{'}$ = 'On input $<M>$':
+\begin{enumerate}[label=\arabic*)]
+\item Use $M$ to construct the following TM $M^{''}$. \\ 
+$M^{''}$ = 'On input $x$ and $y$ where $x$ and $y$ are binary strings with length $\geq$ 2 and $x \neq y$:
+\begin{enumerate}[label=\arabic*)]
+\item Simulate $M$ on input $x$. If it accepts, $reject$, If it rejects proceed to stage 2.
+\item Simulate $M$ on input $y$. If it accepts, $reject$, If it rejects proceed to stage 3.
+\item Simulate $T_{\emptyset}$ on $x$. If it rejects go to 4.
+\item Simulate $T_{\emptyset}$ on $y$. If it rejects, $accept$
+\end{enumerate}
+\item Use TM $R_p$ to determine whether $<M^{''}> \notin P$. If YES, $accept$. If NO, $reject$.
+\end{enumerate}
+As we can see above $M^{''}$ simulates $T_{\emptyset}$ if $M$ rejects $x$ and $y$, hence $L(M^{''}) = L(T_{\emptyset})$. Therefore $<M> \notin P$ iff $M$ rejects $x$ and $y$. \\
+\\
+For Rice's Theorem of undecidability I have satisfied the first part by showing that $\exists M \in P$ and I have showen that $\exists M \notin P$. I have also satisfied the second part by showing that $L(M^{'}) = L(T)$ and that $<M^{'}> \in P$ iff $<T> \in P$. Also showing that $L(M^{''}) = L(T_{\emptyset})$ and that $<M^{''}> \notin P$ iff $<T_{\emptyset}> \notin P$. Therefore, $L$ is undecidable.
+\item Bonus Question. \\
+
+\end{enumerate}
+
 $\vdash_M q_1 0 1 \sqcup \sqcup \sqcup \dots$ \\
 $\vdash_M 0 q_2 1 \sqcup \sqcup \sqcup \dots$ \\
 $\vdash_M 0 1 q_3 \sqcup \sqcup \sqcup \dots$ \\
