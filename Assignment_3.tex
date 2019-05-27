@@ -112,7 +112,16 @@ If machine $M$ does not accept the strings $x$ and $y$ the this will be detected
 $S_1$ = 'abababababababababababababababab'\\
 $S_2$ = '4c1j5b2p0cv4w1x8rx2y39umgw5q85s7'\\
 The first string can be described as 'ab 16 times', this consists of 11 charecters. the second has no obvious description other than writing down the string itself, which has 32 charecters. The complexity of a string is the length of the shortest possible description of the string in some fixed language. It can be shown that the Kolmogorov complexity of any string cannot be more than a few bytes larger than the length of the string itself. If $M$ is a Turing Machine which, on input $w$, outputs string $x$, then the concatenated string $<M> w$ is a description of $x$. If a description $d(x)$ of a string $x$ is of minimal length it is called a minimal description of $x$. Thus, the length of $d(x)$ is the Kolmogorov complexity of $x$ written as $K(x) = |d(x)|$.
-\item b
+\item Prove the exsistance of $c$ such that $K(xxx) \leq K(x)+c$: \\
+Proof: Consider the following TM $M$, which expects an input of the form $<N, w>$, where $N$ is a TM and $w$ is an input for it. \\
+$M$ = 'On input $<N, w>$:
+\begin{enumerate}[label=\arabic*)]
+\item Run $N$ on $w$ until it halts and produces an output string $s$.
+\item Output the string $sss$.
+\end{enumerate}
+A description of $xxx$ is $<M>d(x)$. as $d(x)$ is a minimal description of $x$, the length of this description is:
+$$|<M>d(x)| = 2|<M>| + |d(x)| = c + K(x)$$
+where $c=2|<M>|$
 \end{enumerate}
 
 
