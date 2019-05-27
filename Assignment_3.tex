@@ -83,246 +83,33 @@ $M^{''}$ = 'On input $x$ and $y$ where $x$ and $y$ are binary strings with lengt
 As we can see above $M^{''}$ simulates $T_{\emptyset}$ if $M$ rejects $x$ and $y$, hence $L(M^{''}) = L(T_{\emptyset})$. Therefore $<M> \notin P$ iff $M$ rejects $x$ and $y$. \\
 \\
 For Rice's Theorem of undecidability I have satisfied the first part by showing that $\exists M \in P$ and I have showen that $\exists M \notin P$. I have also satisfied the second part by showing that $L(M^{'}) = L(T)$ and that $<M^{'}> \in P$ iff $<T> \in P$. Also showing that $L(M^{''}) = L(T_{\emptyset})$ and that $<M^{''}> \notin P$ iff $<T_{\emptyset}> \notin P$. Therefore, $L$ is undecidable.
+\newpage
 \item Bonus Question. \\
-
+Because we know that $HALT_{TM}$ is recognisable I will start by assuming there exists a turing machine $M^{*}$ that recognises $L$ and attempt to prove $M^{*} \leq_{m} HALT_{TM}$. \\
+We start by constructing a computable function $f$ that takes inputs of the form $<M>$ and returns outputs of the form $<M^{'}>$, where 
+$$<M> \in M^{*} \iff <M^{'}> \in HALT_{TM}$$
+The following TM $F$ computes $f$. \\
+$F$ = 'On input $<M>$:
+\begin{enumerate}[label=\arabic*)]
+\item Construct the following machine $M^{'}$. \\
+$M^{'}$ = 'On input $x$ and $y$ where $x$ and $y$ are binary strings with length $\geq$ 2 and $x \neq y$: 
+\begin{enumerate}[label=\arabic*)]
+\item Run $M$ on $x$.
+\item If $M$ accepts, go to 4.
+\item If $M$ rejects, enter a loop.
+\item Run $M$ on $y$.
+\item If $M$ accepts, $accept$.
+\item If $M$ rejects, enter a loop.
 \end{enumerate}
-
-$\vdash_M q_1 0 1 \sqcup \sqcup \sqcup \dots$ \\
-$\vdash_M 0 q_2 1 \sqcup \sqcup \sqcup \dots$ \\
-$\vdash_M 0 1 q_3 \sqcup \sqcup \sqcup \dots$ \\
-$\vdash_M 0 1 \sqcup q_3 \sqcup \sqcup \dots$ \\
-$\vdash_M 0 1 \sqcup \sqcup q_3 \sqcup \dots$ \\
-\\
-as we can see here, when $q_3$ is reached, the input can never reach a final state ie: \\
-$\delta ( q_3 , \sqcup ) = ( q_3 , \sqcup , R )$ \\
-$\delta ( q_3 , 0 ) = ( q_3 , 0 , R )$ \\
-$\delta ( q_3 , 1 ) = ( q_3 , 1 , R )$ \\
-Therefore machine $M$ is not a decider. \\
-\\
-\textbf{1. ii} \\
-The language recognised by a Turing-machine is, by definition, the set of strings that the machine accepts. Let such a set be called $L$ and let \\
-$L=\{1^n 0^k | n \geq 0$ and $k > 0\}$ \\
-\\
-Now we must prove $A=L(M)$ \\
-By definition, if $M$ is a turing machine with input alphabet $\Sigma$, let $L(M)$ be the set of strings over $\Sigma$ accepted by $M$. If $A$ is a language over $\Sigma$, we say that $M$ recognises $L$ if $A=L(M)$. \\
-So, I must prove that $A \subseteq L(M)$ and $L(M) \subseteq A$. \\
-\\
-$i) A \subseteq L(M)$ \\
-Suppose that $w \in A$. So $w$ contains $n\#1^s$ and $k\#0^s$ where $n \geq 0$ and $k > 0$. Let $w = w_1 w_2 \dots w_n$ and let $w_k$ be the first $0$ in $w$ $(1 \leq  k \leq n)$.
-so $w = 1^{k-1}0^{j}$ and $j = n - ( k - 1)$. \\ 
-We need to show that $w \in L(M)$, ie that $M$ accepts $w$. So we need to show that there is a sequence of configurations $C_1 \dots, C_|$ such that $C_1$ is the starting configuration of $M$ on $w$, each $C_i$ yields $_M C_{i+1}$ (where $1 \leq i < n $), and $C_|$ is an accepting configuration. \\
-We construct the following sequence of cfs on $M$: \\
-$C_1 = q_1 1^{k-1} 0^j \sqcup \sqcup \dots$, \\
-$C_2 = 1^1 q_1 1^{k-2} 0^j \sqcup \sqcup \dots$, \\
-$C_k = 1^{k-1} q_1 0^j \sqcup \sqcup \dots$ , \\
-$C_{k+1} = 1^{k-1} 0 q_2 0^{j-1} \sqcup \sqcup \dots$, \\
-$C_{k+2} = 1^{k-1} 0 0 q_2 0^{j-2} \sqcup \sqcup \dots$, \\
-$C_{n-1} = 1^{k-1} 0^{j-1} q_2 0 \sqcup \sqcup \dots$, \\
-$C_n = 1^{k-1} 0^j q_2 \sqcup \sqcup \dots$, \\
-$C_{n+1} = 1^{k-1} 0^j \sqcup q_{accept} \sqcup \dots$ \\
-\\
-It is obvious that $C_i \vdash_M C_{i+1}$ for $1 \leq i < k$, since 
-$\delta ( q_1 , 1 ) = ( q_1 , 1 , R )$ and so until the machine encounters the first $0$, ie $w_k$, it simply stays in $q_1$ and moves right. In  addition, $C_k \vdash_M C_{k+1}$, since 
-$\delta ( q_2 , 0 ) = ( q_2 , 0 , R )$ and so until the machine encounters the first $\sqcup$, ie $w_{n+1}$, it simply stays in $q_2$ and moves to the right. Finally, $C_n \vdash_M C_{n+1}$ [Reason: $C_n = 1^{k-1} 0^j q_2 \sqcup \sqcup \dots$, and this yields $_M$ $C_{n+1} = 1^{k-1} 0^j \sqcup q_{accept} \sqcup \dots$ since $\delta ( q_2 , \sqcup ) = ( q_{accept} , \sqcup , R )$]  \\
-\\
-Note also that $C_1$ is the start configuration of $M$ on $w$, and $C_{n+1}$ is an accepting configuration. It follows from definitions 3 $M$ accepts $w$. Hence since $w$ was an arbitrary member of $A$, it follows that for all $w \in {0,1}^*$, if $w \in A$ then $w \in L(M)$. Hence $(^*) A \subseteq L(M)$. \\
-
+\item Output $<M^{'}>$.
+\end{enumerate}
+If machine $M$ does not accept the strings $x$ and $y$ the this will be detected and in such case $F$ outputs a string not in $HALT_{TM}$. Therefore, I have shown, using mapping reducibility that the language $L$ is turing decidable because $HALT_{TM}$ is turing decidable. 
+\end{enumerate}
 \newpage
-$ii) L(M) \subseteq A$ \\
-Consider $w \in L(M)$. Since $w \in L(M)$, $M$ accepts $w$. So there is a sequence of cfs $C_1, C_2, \dots, C_{n+1}$ such that $C_1$ is the start cf of $M$ on $w$, each $C_i \vdash_M C_{i+1} (for 0 \leq i \leq k)$, also $C_k \vdash_M C_{k+1} (for 0 \leq k < n)$, and $C_{n+1}$ is an accepting cf. \\
-\\
-Suppose that $C_{n+1} = 1^k 0^j q_{accept}$. Clearly $w = 1^k 0^j$ where $k \geq 0$ and $j > 0$ (since $M$ doesn't change any of the input symbols). Now note that the application of $\delta$ that yields $C_{n+1}$ from the preceding cf $C_n$ is $\delta(q_2, \sqcup) = (q_{accept}, \sqcup, R)$ and to get to $q_2$ there must be atleast one $0$ in $w$ as from $C_k$ to $C_{k+1}$ is $\delta(q_1, 0) = (q_2, 0, R)$. It follows that $w$ contains one or more $0^s$ and zero or more $1^s$, and so $w \in A$. \\
-\\
-Since $w$ was an arbitrart member of $L(M)$, it follows that for all $w \in \{0, 1\}^*$, if $w \in L(M)$ then $w \in A$. Hence $L(M) \subseteq A$. \\
-\\
-\textbf{1. iii} \\
-The language $A$ is turing-decidable. This is because there exists a turing-machine that decides $A$. As a simple example, if we took the turing-machine $Q$, removed $q_3$ and redirected anything going to $q_3$ to $q_{reject}$ and called it $Q_2$ we would have: \\
-$\delta ( q_1 , \sqcup ) = ( q_{reject} , \sqcup , R )$ \\
-$\delta ( q_1 , 0 ) = ( q_2 , 0 , R )$ \\
-$\delta ( q_1 , 1 ) = ( q_1 , 1 , R )$ \\
-$\delta ( q_2 , \sqcup ) = ( q_{accept} , \sqcup , R )$ \\
-$\delta ( q_2 , 0 ) = ( q_2 , 0 , R )$ \\
-$\delta ( q_2 , 1 ) = ( q_{reject} , 1 , R )$ \\
-As you can see here, $Q_2$ decides language $A$. In $q_1$ the input can be rejected, looped on $1^s$ or sent to $q_2$. $q_2$ can be accepted, loop on $0^s$ or rejected. Therefore , $Q_2$ decides $A$ and the language $A$ is decidable.\\
-\newpage
+\begin{enumerate}[label=\alph*)]
 
-
-
-\noindent \textbf{2. i \\}
-\textbf{Turing-Machine M \\}
-\begin{tikzpicture}[shorten >=1pt, node distance=5cm, on grid, auto]
-	\node[state, initial] (q_0) {$q_0$};
-	\node[state, right=of q_0] (q_2){$q_2$};
-	\node[state, above=of q_2] (q_1) {$q_1$};
-	\node[state, below=of q_2] (q_3) {$q_3$};
-	\node[state, right=of q_1] (q_{accept}) {$q_{accept}$};
-	\node[state, left=of q_3] (q_{reject}) {$q_{reject}$};
-	
-	\path[->]	
-	(q_0) edge[loop above] node{X $\rightarrow$ R} (q_0)
-	(q_0) edge node{0/$\sqcup \rightarrow$ R } (q_1)
-	(q_0) edge[right] node{1/$\sqcup \rightarrow$ R } (q_3)
-	(q_0) edge[bend right] node{$\sqcup \rightarrow$ R } (q_{reject})
-	(q_1) edge node{$\sqcup \rightarrow$ R} (q_{accept})
-	(q_1) edge[loop above] node{X,0 $\rightarrow$ R} (q_1)
-	(q_1) edge[bend left] node{1/X $\rightarrow$ L} (q_2)
-	(q_2) edge[loop right] node{1,X,0 $\rightarrow$ L} (q_3)
-	(q_2) edge node{$\sqcup \rightarrow$ R} (q_0)
-	(q_3) edge[loop below] node{X,1 $\rightarrow$ R} (q_3)
-	(q_3) edge[right] node{0/X $\rightarrow$ L} (q_2)
-	(q_3) edge node{$\sqcup \rightarrow$ R} (q_{reject});
-\end{tikzpicture}
-\\
-
-A formal definition of the above Turing machine
-\begin{wraptable}{r}{5.5cm}
-	\centering
-	\begin{tabular}{||c | c c c c||} 
- 		\hline
- 		$\delta$ & 0 & 1 & $\sqcup$ & X \\ [0.5ex] 
- 		\hline\hline
- 		$q_0$ & $q_1$ & $q_3$ & $q_{reject}$ & $q_0$\\ 
- 		$q_1$ & $q_1$ & $q_2$ & $q_{accept}$ & $q_1$ \\
-		$q_2$ & $q_2$ & $q_2$ & $q_0$ & $q_2$\\
- 		$q_3$ & $q_2$ & $q_3$ & $q_{reject}$ & $q_3$\\[1ex] 
- 		\hline
-	\end{tabular}
-\end{wraptable}
-
-\begin{itemize}
-	\item $M \: = \: ( Q, \: \Sigma , \Gamma , \delta, q_0, q_{accept}, q_{reject} )$ 
-	\item $Q \: = \: (q_0, q_1, q_2, q_3, q_{accept}, q_{reject} )$ 
-	\item $\Sigma \: = \: \{0,\: 1 \}^*$ 
-	\item $\Gamma \: = \: \{0,\: 1,\: \sqcup, \: X \}$ 
-\end{itemize}
-description: \\
-This machine matches $1^s$ and $0^s$ together. If there is no match for a $0$, then there are more $0^s$ than $1^s$. \\ 
-When the machine is started $q_0$ checks the input. If the input is $0$ then the machine replaces $0$ with $\sqcup$ and moves right to $q_1$. $q_1$ then moves right through all the $X^s$ and $0^s$ looking for a $1$. Once a $1$ has been located (this means that a $0$ has been matched with a $1$), the machine replaces $1$ with an $X$ and then moves left into $q_2$.  \\ 
-In $q_2$ the machine moves left through all the $1^s$, $X^s$ and $0^s$ looking for $\sqcup$ (the initial matched item). Once $\sqcup$ has been found the machine returns to $q_0$ to start again. Note that $q_0$ moves right over all the $X^s$ looking for the first instance of $1$ or $0$. \\
-If the input is $1$ then the machine replaces $1$ with $\sqcup$ moves to $q_3$. $q_3$ then moves right through all the $X^s$ and $1^s$ looking for a $0$. Once a $0$ has been located (this means that a $1$ has been matched with a $0$), the machine replaces $0$ with an $X$ and then moves left into $q_2$ ($q_2$ has already been explained). \\ 
-\\
-The machine moves right into $q_{accept}$ if a $\sqcup$ is found in $q_1$. This means that no matching $1$ was found for a $0$ which then means that there are more $0^s$ than $1^s$. \\
-\\
-The machine moves right into $q_{reject}$ in two cases: \\
-1. If the string is the empty string. This means that there are not more $0^s$ than $1^s$ and is therefore rejected. \\
-2. If the machine is in $q_3$ and a $\sqcup$ is found. This means that no matching $0$ was found for a $1$ which then means that there are more $1^s$ than $0^s$. \\
-
-\textbf{2. ii} \\
-Computation for machine $M$ on string $01$: \\
-$\vdash_M q_0 0 1 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup q_1 1 \sqcup \sqcup \dots$ \\
-$\vdash_M q_2 \sqcup X \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup q_0 X \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup X q_0 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup X \sqcup q_{reject} \sqcup \dots$ \\
-Computation for machine $M$ on string $100$: \\ 
-$\vdash_M q_0 1 0 0 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup q_3 0 0 \sqcup \sqcup \dots$ \\
-$\vdash_M q_2 \sqcup X 0 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup q_0 X 0 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup X q_0 0 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup X \sqcup q_1 \sqcup \sqcup \dots$ \\
-$\vdash_M \sqcup X \sqcup \sqcup q_{accept} \sqcup \dots$ \\
-\\
-\textbf{2. iii} \\
-We start by assuming that there is a turing machine $N$ that decides $L_1$. We can then construct a turing machine $N^{'}$ that decides $\overline{L_1}$ in the following way: \\
-$N^{'}$ = "On input $w$": 
-\begin{enumerate}
-\item Simulate $N$ on $w$.
-\item $Accept$ if $N$ rejects, $reject$ if $N$ accepts.
-\end{enumerate} 
-$N^{'}$ always halts because $N$ always halts. $N^{'}$ gives the correct result, because if $w \in L_1$ $N$ will accept and so $N^{'}$ will reject, and if $w \notin L_1$, $N$ will reject in which case $N^{'}$ will accept. \\
-This means that $N^{'}$ decides $\overline{L_1}$ and the language is decidable. \\ 
-We now have machine $N^{'}$ that decides $\overline{L_1}$ and we have machine $M$ that decides the language $L$. Using these two machines we can now construct a turing machine $M^{'}$ that decides $L_2$ in the following way:\\ 
-$M^{'}$ = "On input $w$": 
-\begin{enumerate}
-\item Simulate $N^{'}$ on $w$.
-\item if $N^{'}$ accepts, move to 3. if $N^{'}$ rejects, $reject$.
-\item Simulate $M$ on $w$.
-\item if $M$ accepts, $reject$. if $M$ rejects, $accept$
-\end{enumerate}
-$M^{'}$ always halts because $N^{'}$ and $M$ always halts. $M^{'}$ gives the correct result, because if $w \notin \overline{L_1}$ $N^{'}$ will reject and so if $w \in \overline{L_1}$, then $w$ will be sent to $M$. In $M$ if $w \notin L$, $M$ will accept $w$, else $M$ will reject. \\
-This means that $M^{'}$ decides $L_2$ and the language is decidable. \\
-\newpage
-\textbf{3.} \\
-$Q = \{ <A, B> |$ A and B are NFAs over some alphabet $\Sigma$ and $\emptyset \sqsubseteq L(A)$ and $L(A) \sqsubseteq L(B)$ is Turing-decidable. \\
-Note $\sqsubseteq$ = 'Is a proper set of' \\
-Proof: Firstly, we know that any NFA can be replicated by a DFA.
-Secondly, by definition, we know the empty set is a proper subset of any nonempty set. So, we know that $L(A)$ is not an empty set. \\
-Again, by definition, we know that $L(A) \sqsubseteq L(B)$ iff: \\
-$\forall x \in L(A), x \in L(B)$ but $\forall y \in L(B), \neg(\forall y) \in L(A)$ which implies that: \\
-$L(A) \cap \overline{L(B)} = \emptyset$ $\cap$ $L(B) \cap \overline{L(A)} \neq \emptyset$ 
-\\
-From the proofs of the closure of the class of regular languages under intersection, complement and union, we can construct a DFA $C$ which recognises 
-$L(A) \cap \overline{L(B)} = \emptyset$ $\cap$ $L(B) \cap \overline{L(A)} \neq \emptyset$. \\
-This construction can be carried out by a TM. Once we have such a C, we can test to see if $L(A) \sqsubseteq L(B)\}$ by testing to see if $L(A) \cap \overline{L(B)} = \emptyset$ and $L(B) \cap \overline{L(A)} \neq \emptyset$ using the TM $C^*$. \\
-\\
-$C^*$ = 'On input $<A$,$B>$, where A and B are NFAs:',
-\begin{enumerate}
-\item Convert $A,B$ to DFAs $A^{'},B^{'}$.
-\item Use $T$ on $<A^{'}>$ from 'Theorem 10' to show that $L(A)$ is not empty. If $T$ rejects then got to 3, else $reject$. 
-\item let $B^{''}$ be the DFA that recognises $\overline{L(B)}$ let $D$ be a DFA that recognises $L(A) \cap \overline{L(B)}$. Use $T$ on  $<D>$, If $T$ rejects then $reject$, else got to 4.  
-\item let $A^{''}$ be the DFA that recognises $\overline{L(A)}$ let $E$ be the DFA that 
-recognises $L(B) \cap \overline{L(A)}$. Use $T$ on $<E>$, If $T$ accepts then $reject$, if $T$ rejects then $accept$.
-\end{enumerate}
-Clearly $C^{*}$ accepts $<A,B>$ iff $L(A) \sqsubseteq L(B)$. $C^{*}$ will always end in a $reject$ or $accept$ state because we make use of the theorem 10 $E_{DFA}$ is decidable. In step 1 we convert the NFAs to DFAs. Then in step 2 we check to see if $L(A)$ is empty. If $L(A) \neq \emptyset$ then we move to step 3 and check to see if $L(A) \cap \overline{L(B)} = \emptyset$ if accepted then we move to step 4 and check $L(B) \cap \overline{L(A)} \neq \emptyset$. As we can see, $C^{*}$ will always halt on input $<A,B>$ because of theorem 10 where a $E_{DFA}$ is decidable.
-\newpage
-\textbf{4.} \\
-$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$ \\
-$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$\\
-Note, the symbols $\bigodot$ and $\bigotimes$ will represent given language. We can also assume that languages $A$ and $B$ are decidable.\\
-Proof: I will start with deciding $A  \circ B$. (Theorem 3. iv).\\
-Suppose $A$ and $B$ are Turing-decidable. Let $M_1$ decide $A$ and $M_2$ decide $B$. Then $N$, a $NTM$, decides $A  \circ B$. $N$ is as follows:\\
-\\
-$N$ = 'On input $w$',
-\begin{enumerate}
-\item Non-deterministically split $w$ into two parts, $x$ and $y$. Go to 2.
-\item Run $M_1$ on the left part, $x$. If $M_1$ accepts, go to 3. if $M_1$ rejects, go to $q_{reject}$.
-\item Run $M_2$ on the right part $y$. If $M_2$ accepts, $accept$. If $M_2$ rejects,  go to $q_{reject}$.
-\end{enumerate}
-Clearly $N$ accepts $w$ iff $w$ is the concatenation of two strings $x$ and $y$, the first of which is in $A$ and the second in $B$, and $N$ rejects otherwise. Hence $N$ decides $A  \circ B$. \\
-\\
-Now we will look at $(w \in A \; \& \; w \notin B)$. This means that $A \cap B = \emptyset$. Also, $(w \in A \; \& \; w \in B)$ would then mean that $A \cap \overline{B} = \emptyset$ and we can use this to say that: $$\bigodot = A \cap \overline{B} = \emptyset$$
-$$\bigotimes = A \cap B = \emptyset$$
-We can use the following two Turing machine's $M^{*}$ to show that the set of Turing decidable languages are closed under $\bigodot$ and $M^{**}$ to show that the set of Turing decidable languages are closed under $\bigotimes$:
-\newpage
-Let $A^{'}$ be the DFA that accepts the language $A$. Let $B^{'}$ be the DFA that accepts the language $B$ and run both $M^{*}$ and $M^{**}$ in the following way:\\
-\\
-$M^{*}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
-\begin{enumerate}
-\item Let $B^{''}$ be the DFA that decides $\overline{B}$ and let $D$ be the DFA that recognises $(A \cap \overline{B})$. Use $T$ (from theorem 10) on $<D>$, if $T$ accepts, $accept$. If $T$ rejects got to 2.
-\item Take a string $w$ such that $w \in \{0,1\}^{*}$ and use Turing machine $N$ on $w$. If $N$ accepts, $accept$. If $N$ rejects, $reject$.
-\end{enumerate} 
-$M^{**}$ = 'On input $A$ and $B$, where $A$ and $B$ are decidable languages'
-\begin{enumerate}
-\item Let $D^{*}$ be the DFA that recognises $(A \cap B)$. Use $T$ on $<D^{*}>$. If $T$ accepts $accept$. If $T$ rejects, go to 2. 
-\item Take a string $w$ such that $w \in \{0,1\}^{*}$ and use Turing machine $N$ on $w$. If $N$ accepts, $accept$. If $N$ rejects, $reject$.
-\end{enumerate}
-As we can see, machine $M^{*}$ and $M^{**}$ can only $accept$ or $reject$ the two languages $A$ and $B$. This is because we use $T$ from theorem 10 which decides a DFA input. So $T$ will always halt in an accept or reject state. We also make use of Theorem 3. iv where Turing machine $N$ decides concatenation of two decidable languages. $N$ is also decidable because $N$ will always halt in an accept or reject state. We already know the languages $A$ and $B$ are Turing-decidable and we can see that $M^{*}$ and $M^{**}$ are also decidable. Therefore, $M^{*}$ decides: $$\bigodot (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \in B)\; or \; w \in A  \circ B \}$$
-and $M^{**}$ decides :
-$$\bigotimes (A, B) = \{w \in \{0,1\}^{*} | (w \in A \; \& \; w \notin B)\; or \; w \in A  \circ B \}$$
-The set of Turing-decidable languages is also closed under both $\bigotimes$ and $\bigodot$. We know this because we have proven above that both languages are decidable using Turing machines $M^{*}$ and $M^{**}$. This means, by definition of closure The class of Turing-decidable languages over a fixed alphabet is closed under the operations of i) union, ii) intersection, iii) complement, iv) concatenation, and v) star. Therefore, we can perform all operations on $\bigotimes$ and $\bigodot$. 
-\newpage
-\textbf{5. [bonus question]} \\
-Consider $L = \{ 1^{n} |$there is a consecutive run of at least n 7's in the decimal expansion of $\pi\}$. Prove that $L$ is Turing-decidable. \\
-We know that the decimal expansion of $\pi$ is countably infinite. We can easily map the natural numbers $N$ to $decimal^{\pi}$. This means that the decimal expansion of $\pi$ is regular which means there is a DFA that accepts it. \\
-It seems like this is possible but i am not sure about putting a limit on $n$. For instance,\\ Case 1: there is a consecutive run of atleast n 7's \\Case 2: the machine never halts because $n$ is too high. \\
-If I put a limit on $n$ then i know it will always halt. The question does state that 'atleast n 7's' which makes me think that we can put a bound on $n$. \\
-Another thing i know about the first million digits of $\pi$:
-\begin{enumerate}
-\item '7' appears 10,287 times
-\item '77' appears 943 times
-\item '777' appears 93 times
-\item '7777' appears 16 times
-\item '77777' appears 0 times
-\end{enumerate}
-Because we know that the the decimal expansion of $\pi$ is countably infinite there is a possibility off the string $7^{k}$ where $k \geq 5$ in the next million digits of $\pi$ so i propose two algorithms we can consider: \\
-\begin{enumerate}
-\item For every integer $n \geq 0$, the string $7^{n}$ appears in the decimal representation of $\pi$. In this case, the algorithim always returns $accept$.
-\item There is a largest integer $N$ such that $7^{N}$ appears in the decimal representation of $\pi$. In this case the following algorithm (with the value $N$ hard-coded) is always correct:
 \end{enumerate}
 
-We have no idea which of these algorithms is correct, or what value of $N$ is the right one in algorithm 2. We do know that one of these algorithms is guaranteed to be correct. Therefore, there is an algorithm to decide whether a string of $n \; 7^{s}$ appears in $\pi$. This makes $L$ Turing-decidable.  
 
 
 
