@@ -122,9 +122,18 @@ $M$ = 'On input $<N, w>$:
 A description of $xxx$ is $<M><M>d(x)$. as $d(x)$ is a minimal description of $x$, the length of this description is:
 $$|<M><M>d(x)| = 3|<M>| + |d(x)| = c + K(x)$$
 where $c=3|<M>|$
+\item c
 \end{enumerate}
-
-
+\noindent \textbf{4.}
+\begin{enumerate}
+\item In computability theory, Rice's theorem states that all non-trivial, semantic properties of programs are undecidable. A semantic property is one about the program's behavior. For instance, does the program terminate for all inputs, unlike a syntactic property, for instance, does the program contain an if-then-else statement. A property is non-trivial if it is neither true for every computable function, nor false for every computable function. Another way of stating Rice's theorem that is more useful in computability theory follows. \\
+Let $P$ be a language consisting of TM descriptions where $P$ fulfils two conditions. \begin{enumerate}[label=\arabic*)]
+\item $P$ is nontrivial, it contains some, but not all, TM descriptions.
+\item Whenever $L(M_1) = L(M_2)$ we have $<M_1> \in P$ iff $<M_2> \in P$. Here $M_1$ and $M_2$ are any TMs.
+\end{enumerate}
+Then, $P$ is undecidable.
+\item b
+\end{enumerate}
 
 
 
