@@ -122,7 +122,7 @@ $M$ = 'On input $<N, w>$:
 A description of $xxx$ is $<M><M>d(x)$. as $d(x)$ is a minimal description of $x$, the length of this description is:
 $$|<M><M>d(x)| = 3|<M>| + |d(x)| = c + K(x)$$
 where $c=3|<M>|$
-\item c
+\item $K(f(x)) \leq K(x) + c$
 \end{enumerate}
 \noindent \textbf{4.}
 \begin{enumerate}
@@ -132,7 +132,7 @@ Let $P$ be a language consisting of TM descriptions where $P$ fulfils two condit
 \item Whenever $L(M_1) = L(M_2)$ we have $<M_1> \in P$ iff $<M_2> \in P$. Here $M_1$ and $M_2$ are any TMs.
 \end{enumerate}
 Then, $P$ is undecidable.
-\item b
+\item The major hypothesis of Rice theorem is that you are dealing with a set which is "extensional", or "semantically closed". Formally this requires that when the encoding of a TM $M$ belongs to the set, and $N$ is a TM equivalent to $M$, then the encoding of $N$ must also belong to the set. Conditions like "halts in 50 steps" break equivalence, in general. I.e. it is possible that $M$ halts in 10 steps with output zero on every input, yet $N$ does the same after "wasting" 100 steps. So, Rice can not be applied to these. The property "at least five moves" is decidable. The properties "accepts a string of at least five" and "halts for every input of length <50" are NOT decidable.
 \end{enumerate}
 
 
