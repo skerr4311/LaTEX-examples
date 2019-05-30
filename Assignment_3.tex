@@ -120,7 +120,7 @@ $M$ = 'On input $<N, w>$:
 \item Output the string $sss$.
 \end{enumerate}
 A description of $xxx$ is $<M>d(x)$. as $d(x)$ is a minimal description of $x$, the length of this description is:
-$$|<M><M>d(x)| = 2|<M>| + |d(x)| = c + K(x)$$
+$$|<M>d(x)| = 2|<M>| + |d(x)| = c + K(x)$$
 where $c=2|<M>|$
 \item $K(f(x)) \leq K(x) + c$: \\
 Every computable function $f$ can be represented by a turing machine $F$ which takes input $x$ and outputs $y$. 
@@ -133,7 +133,35 @@ Let $P$ be a language consisting of TM descriptions where $P$ fulfils two condit
 \item Whenever $L(M_1) = L(M_2)$ we have $<M_1> \in P$ iff $<M_2> \in P$. Here $M_1$ and $M_2$ are any TMs.
 \end{enumerate}
 Then, $P$ is undecidable.
-\item The major hypothesis of Rice theorem is that you are dealing with a set which is "extensional", or "semantically closed". Formally this requires that when the encoding of a TM $M$ belongs to the set, and $N$ is a TM equivalent to $M$, then the encoding of $N$ must also belong to the set. Conditions like "halts in 50 steps" break equivalence, in general. I.e. it is possible that $M$ halts in 10 steps with output zero on every input, yet $N$ does the same after "wasting" 100 steps. So, Rice can not be applied to these. The property "at least five moves" is decidable. The properties "accepts a string of at least five" and "halts for every input of length <50" are NOT decidable.
+\item To prove that requirement 1 is essential we will begin by assuming that $P$ is trivial. This means that $P$ contains all TMs or $P$ is empty. \\
+First, we let $P$ contain nall TMs, then we have $P= \emptyset$. We will construct a recogniser $R$ to recognise $P$ in the following way:
+$R =$ 'On input $<M, w>$'
+\begin{enumerate}[label=\arabic*)]
+\item If $M$ accepts $w$ then $accept$
+\item If $M$ rejects $w$ or goes into a loop, this has no effect on $R$ as it only recognises, not decides. 
+\end{enumerate}
+Therefore, we can say that $P$ is Turing-recognizable. \\
+\\
+Second, we construct a Recogniser $\overline{R}$ to recognise $\overline{P}$ where $\overline{P} \neq \emptyset$ in the following way: \\
+$\overline{R} =$ 'On input $<M, w>$'
+\begin{enumerate}[label=\arabic*)]
+\item If $M$ rejects $w$ or goes into a loop, $accept$
+\item If $M$ accepts $w$ then $reject$
+\end{enumerate}
+Therefore, we can say that $\overline{P}$ is turing recognisable. \\
+\\
+As we can see above, $P$ is co-turing recognisable and from theorem 4.22, 'A language is decidable iff it is turing recognisable and co-turing recognisable' Therefore, $P$ must be 'not trivial' \\
+\\
+To prove that regirement 2 is essential we know that whenever $L(M_1) = L(M_2)$, we have $<M_1> \in P$ iff $<M_2> \in P$. Requirement 2 is false if we have $L(M_1) = L(M_2)$, and $<M_1> \in P$ iff $<M_2> \notin P$ \\
+We know that if $<M_2> \notin P$ then $<M_2> \in \overline{P}$. \\
+We start by assuming we have a turing machine $M$ that decides $P$, Then let $M_1$ recognise $P$ and $M_2$ recognise $overline{P}$ in the following way \\
+$M = $ 'On input $<M_1, M_2>$ and a string $w$'
+\begin{enumerate}[label=\arabic*)]
+\item Run $M_1$ and $M_2$ on $w$ in parallel
+\item If $w \in P$, if $M_1$ acceptes $w$, $accept$. Else, $M_1$ rejects, $reject$.
+\item If $w \in \overline{P}$, if $M_2$ acceptes $w$, $accept$. Else, $M_2$ rejects, $reject$.
+\end{enumerate}
+As we can see above, $P$ is therefore decidable which is a contradiction to Rice's theorem. Therefore, requirement 2 is essential. 
 \end{enumerate}
 
 
