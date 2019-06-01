@@ -123,7 +123,20 @@ A description of $xxx$ is $<M>d(x)$. as $d(x)$ is a minimal description of $x$, 
 $$|<M>d(x)| = 2|<M>| + |d(x)| = c + K(x)$$
 where $c=2|<M>|$
 \item $K(f(x)) \leq K(x) + c$: \\
-Every computable function $f$ can be represented by a turing machine $F$ which takes input $x$ and outputs $y$. Page 63-64
+Proof: Every computable function $f$ can be represented by a turing machine $F$ which takes input $x$ and outputs $y$. A general description language is a computable function $f: \Sigma^{*} \rightarrow \Sigma^{*}$; the minimal description of $x$ with respect to $f$, written as $d_{f}(x)$, is the lexicographically shortest string $s$ where $f(s)=x$ and 
+$$K_{f}(x) = |d_{f}(x)|$$
+Using Theorem 6.27 for any descriptional language $f$, a fixed constant $c$ exists that depends only on $f$ such that 
+$$\forall x [K(x) \leq K_{f}(x) + c]$$
+Let $f$ be a description language and consider the following TM $M$:
+$M = $ 'On input $w$':
+\begin{enumerate}[label=\arabic*)]
+\item Output $f(x)$.
+\end{enumerate}
+Then $<M>d_{f}(x)$ is a description of $x$ and:
+$$|<M>d_{f}(x)| = K_{f}(x) + 2|<M>| = K_{f}(x) + c$$
+where $c = 2|<M>|$
+
+As we can see from TM $M$ and proving that $K(f(x)) \leq K(x) + c$
 \end{enumerate}
 \noindent \textbf{4.}
 \begin{enumerate}
