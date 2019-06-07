@@ -4,3 +4,4 @@ these are assignment done in latex for the univerdity of auckland semester 1, 20
 A1 : 100/100
 Assignment 1: 94/100
 Assignment 2: 79/100 - mistake in turing-machine?? - didn't use the closure rule properly
+Assignment 3: ../100
